@@ -1,0 +1,29 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cloudfest-demo1-web
+  labels:
+    tier: web
+spec:
+  terminationGracePeriodSeconds: 1
+  containers:
+    - name: demo1-web
+      image: amagdy/cloudfest-demo:0.0.1
+      ports:
+        - containerPort: 8000
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: cloudfest-demo1-web
+spec:
+  selector:
+    tier: web
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 8000
+    # nodePort: 30800
+    targetPort: 8000
